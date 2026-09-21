@@ -1,0 +1,73 @@
+package com.example.customerapp.model;
+
+/**
+ * Представляет покупателя и реквизиты его банковского обслуживания.
+ */
+public final class Customer {
+    private final int id;
+    private final String lastName;
+    private final String firstName;
+    private final String middleName;
+    private final String address;
+    private final long creditCardNumber;
+    private final String bankAccountNumber;
+
+    /**
+     * Создает покупателя.
+     *
+     * @param id идентификатор
+     * @param lastName фамилия
+     * @param firstName имя
+     * @param middleName отчество
+     * @param address адрес
+     * @param creditCardNumber номер кредитной карточки
+     * @param bankAccountNumber номер банковского счета
+     */
+    public Customer(int id, String lastName, String firstName, String middleName,
+                    String address, long creditCardNumber, String bankAccountNumber) {
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.address = address;
+        this.creditCardNumber = creditCardNumber;
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public long getCreditCardNumber() {
+        return creditCardNumber;
+    }
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "ID: %d | ФИО: %s %s %s | Адрес: %s | Номер кредитной карточки: %d"
+                        + " | Номер банковского счета: %s",
+                id, lastName, firstName, middleName, address,
+                creditCardNumber, bankAccountNumber);
+    }
+}
