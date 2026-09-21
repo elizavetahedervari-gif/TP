@@ -1,0 +1,44 @@
+package com.example.customerapp.app;
+
+import com.example.customerapp.model.Customer;
+import com.example.customerapp.service.CustomerService;
+import com.example.customerapp.ui.ConsoleCustomerInterface;
+
+/**
+ * Запускает консольное приложение для работы со списком покупателей.
+ */
+public final class CustomerApplication {
+
+    private CustomerApplication() {
+	// Utility class.
+    }
+
+    /**
+     * Создает набор покупателей и запускает пользовательский интерфейс.
+     *
+     * @param args аргументы командной строки не используются
+     */
+    public static void main(String[] args) {
+	Customer[] customers = {
+		new Customer(1, "Иванов", "Иван", "Иванович",
+			"г. Москва, ул. Лесная, д. 10", 1000123456789012L,
+			"40702810000000000001"),
+		new Customer(2, "Петрова", "Анна", "Сергеевна",
+			"г. Санкт-Петербург, Невский проспект, д. 25", 1000456789012345L,
+			"40817810000000000002"),
+		new Customer(3, "Сидоров", "Олег", "Викторович",
+			"г. Казань, ул. Баумана, д. 7", 1000789012345678L,
+			"40702810000000000003"),
+		new Customer(4, "Кузнецова", "Мария", "Алексеевна",
+			"г. Самара, ул. Молодогвардейская, д. 18", 1000234567890123L,
+			"40817810000000000004"),
+		new Customer(5, "Волков", "Дмитрий", "Павлович",
+			"г. Омск, ул. Гагарина, д. 3", 1000567890123456L,
+			"40702810000000000005")
+	};
+
+	CustomerService customerService = new CustomerService(customers);
+	ConsoleCustomerInterface userInterface = new ConsoleCustomerInterface(customerService);
+	userInterface.start();
+    }
+}
