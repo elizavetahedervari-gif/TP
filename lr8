@@ -1,0 +1,36 @@
+from math import isclose
+
+
+def square(x, y):
+    """Возвращает площадь треугольника по координатам трех вершин."""
+    if len(x) != 3 or len(y) != 3:
+        raise ValueError("X и Y должны содержать по 3 координаты")
+
+    signed_area = 0.5 * (
+        (x[1] - x[0]) * (y[2] - y[0])
+        - (x[2] - x[0]) * (y[1] - y[0])
+    )
+    return abs(signed_area)
+
+
+def compare_triangles(x1, y1, x2, y2):
+    """Сравнивает площади двух треугольников."""
+    area1 = square(x1, y1)
+    area2 = square(x2, y2)
+
+    if isclose(area1, area2):
+        return "Площади треугольников равны"
+    if area1 > area2:
+        return "Большую площадь имеет первый треугольник"
+    return "Большую площадь имеет второй треугольник"
+
+
+if __name__ == "__main__":
+    x1 = [0, 4, 0]
+    y1 = [0, 0, 3]
+    x2 = [1, 5, 1]
+    y2 = [1, 1, 2]
+
+    print(f"Площадь первого треугольника: {square(x1, y1)}")
+    print(f"Площадь второго треугольника: {square(x2, y2)}")
+    print(compare_triangles(x1, y1, x2, y2))
