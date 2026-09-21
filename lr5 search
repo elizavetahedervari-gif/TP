@@ -1,0 +1,53 @@
+package com.example.customerapp.service;
+
+import com.example.customerapp.model.Customer;
+
+/**
+ * Выполняет операции поиска над массивом покупателей.
+ */
+public final class CustomerService {
+    private final Customer[] customers;
+
+    /**
+     * Создает сервис для переданного набора покупателей.
+     *
+     * @param customers массив покупателей
+     */
+    public CustomerService(Customer[] customers) {
+        this.customers = customers.clone();
+    }
+
+    /**
+     * Возвращает копию полного списка покупателей.
+     *
+     * @return массив покупателей
+     */
+    public Customer[] findAll() {
+        return customers.clone();
+    }
+
+    /**
+     * Ищет покупателей, номер карточки которых попадает в заданный интервал.
+     * Границы интервала включаются в результат.
+     *
+     * @param lowerBound нижняя граница
+     * @param upperBound верхняя граница
+     * @return массив найденных покупателей
+     */
+    public Customer[] findByCreditCardRange(long lowerBound, long upperBound) {
+        Customer[] matches = new Customer[customers.length];
+        int matchCount = 0;
+
+        for (Customer customer : customers) {
+            long cardNumber = customer.getCreditCardNumber();
+            if (cardNumber >= lowerBound && cardNumber <= upperBound) {
+                matches[matchCount] = customer;
+                matchCount++;
+            }
+        }
+
+        Customer[] result = new Customer[matchCount];
+        System.arraycopy(matches, 0, result, 0, matchCount);
+        return result;
+    }
+}
