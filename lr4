@@ -1,0 +1,49 @@
+import sys
+
+
+def column_positive_products(matrix):
+	rows = len(matrix)
+	columns = len(matrix[0]) if rows else 0
+	products = []
+
+	for column in range(columns):
+		product = 1.0
+		has_positive = False
+		for row in range(rows):
+			value = matrix[row][column]
+			if value > 0:
+				product *= value
+				has_positive = True
+		products.append(product if has_positive else 0.0)
+
+	return products
+
+
+def main_diagonal_sum(matrix):
+	return sum(matrix[index][index] for index in range(len(matrix)))
+
+
+def positive_sum(matrix):
+	return sum(value for row in matrix for value in row if value > 0)
+
+
+def main():
+	data = sys.stdin.read().split()
+	if len(data) < 2:
+		return
+
+	rows, columns = int(data[0]), int(data[1])
+	values = list(map(float, data[2:2 + rows * columns]))
+	matrix = [values[row * columns:(row + 1) * columns] for row in range(rows)]
+
+	products = column_positive_products(matrix)
+	diagonal = main_diagonal_sum(matrix)
+	total = positive_sum(matrix)
+
+	print(" ".join(map(str, products)))
+	print(diagonal)
+	print(total)
+
+
+if __name__ == "__main__":
+	main()
