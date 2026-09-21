@@ -1,0 +1,67 @@
+package com.example.customerapp.ui;
+
+import com.example.customerapp.model.Customer;
+import com.example.customerapp.service.CustomerService;
+
+import java.util.Scanner;
+
+/**
+ * Организует вывод списка покупателей и ввод параметров поиска в консоли.
+ */
+public final class ConsoleCustomerInterface {
+    private final CustomerService customerService;
+
+    /**
+     * Создает консольный интерфейс.
+     *
+     * @param customerService сервис работы с покупателями
+     */
+    public ConsoleCustomerInterface(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    /**
+     * Показывает полный список и запускает поиск по диапазону карточек.
+     */
+    public void start() {
+        try (Scanner scanner = new Scanner(System.in)) {
+            printCustomers("Полный список покупателей", customerService.findAll());
+
+            System.out.println();
+            System.out.println("Поиск покупателей по номеру кредитной карточки");
+            long lowerBound = readNumber(scanner, "Введите нижнюю границу диапазона: ");
+            long upperBound = readNumber(scanner, "Введите верхнюю границу диапазона: ");
+
+            while (lowerBound > upperBound) {
+                System.out.println("Ошибка: нижняя граница не может быть больше верхней.");
+                lowerBound = readNumber(scanner, "Введите нижнюю границу диапазона: ");
+                upperBound = readNumber(scanner, "Введите верхнюю границу диапазона: ");
+            }
+
+            Customer[] matches = customerService.findByCreditCardRange(lowerBound, upperBound);
+            printCustomers("Результаты поиска", matches);
+        }
+    }
+
+    private long readNumber(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextLong()) {
+            System.out.println("Ошибка: введите целое число.");
+            scanner.next();
+            System.out.print(prompt);
+        }
+        return scanner.nextLong();
+    }
+
+    private void printCustomers(String title, Customer[] customers) {
+        System.out.println(title + ":");
+        if (customers.length == 0) {
+            System.out.println("Покупатели не найдены.");
+            return;
+        }
+
+        for (Customer customer : customers) {
+            System.out.println(customer);
+        }
+    }
+}
