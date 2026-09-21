@@ -1,0 +1,42 @@
+from typing import List
+
+
+def copy_integer_list(source: List[int], target: List[int]) -> None:
+	"""Copy all elements from source to target."""
+	target[:] = source
+
+
+def swap_even_odd_elements(values: List[str]) -> None:
+	"""Swap neighboring elements at even and odd indexes in place."""
+	for index in range(0, len(values) - 1, 2):
+		values[index], values[index + 1] = values[index + 1], values[index]
+
+
+def third_positive_number(values: List[int]) -> int:
+	"""Return the third positive number in the list."""
+	positive_count = 0
+	for value in values:
+		if value > 0:
+			positive_count += 1
+			if positive_count == 3:
+				return value
+	raise ValueError("The list contains fewer than three positive numbers")
+
+
+def del_strings(values: List[str]) -> None:
+	"""Print unique strings sorted in ascending order."""
+	for value in sorted(set(values)):
+		print(value)
+
+
+if __name__ == "__main__":
+	numbers = [1, -2, 3, 0, 5, 7]
+	copied_numbers: List[int] = []
+	copy_integer_list(numbers, copied_numbers)
+	print(copied_numbers)
+
+	strings = ["one", "two", "three", "four"]
+	swap_even_odd_elements(strings)
+	print(strings)
+
+	print(third_positive_number(numbers))
